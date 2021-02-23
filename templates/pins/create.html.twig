@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if app.request.attributes.get('_route') == 'app_pins_edit' %}
+        Modifier Pin
+    {% else %}
+        Créer Pin
+    {% endif %}
+{% endblock %}
+
+{% set route = app.request.attributes.get('_route') %}
+
+{% block body %}
+
+    {% if route == 'app_pins_edit' %}
+        <h1>Modifier pin</h1>
+    {% else  %}
+        <h1> Créer Pin</h1>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    {% if  route == 'app_pins_edit' %}
+        <input type="submit" value="Modifier Pin">
+    {% else %}
+        <input type="submit" value="Créer Pin">
+    {% endif %}
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PinRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\Timestampable;
 
 /**
  * @ORM\Entity(repositoryClass=PinRepository::class)
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Pin
 {
+
+    use Timestampable;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -29,15 +32,6 @@ class Pin
      */
     private $description;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updatedAt;
 
     /**
      * @return mixed
@@ -82,47 +76,5 @@ class Pin
         $this->description = $description;
         return $this;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param mixed $createdAt
-     * @return Pin
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param mixed $updatedAt
-     * @return Pin
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-        return $this;
-    }
-
-
-
-
-
-
 
 }
