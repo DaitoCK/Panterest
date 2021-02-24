@@ -3,13 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Pin;
+use App\Form\PinType;
 use App\Repository\PinRepository;
-use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,10 +30,7 @@ class PinsController extends AbstractController
     {
         $pin = new Pin;
 
-        $form = $this->createFormBuilder($pin)
-            ->add('title', \Symfony\Component\Form\Extension\Core\Type\TextType::class)
-            ->add('description', TextareaType::class)
-            ->getForm();
+        $form = $this->createForm(PinType::class, $pin);
 
         $form->handleRequest($request);
 
@@ -61,14 +57,11 @@ class PinsController extends AbstractController
     }
 
     /**
-     * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins_edit", methods="GET|POST")
+     * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins_edit")
      */
     public function edit(Pin $pin, Request $request, EntityManagerInterface $em):Response
     {
-        $form = $this->createFormBuilder($pin)
-            ->add('title', \Symfony\Component\Form\Extension\Core\Type\TextType::class)
-            ->add('description', TextareaType::class)
-            ->getForm();
+        $form = $this->createForm(PinType::class,$pin,);
 
         $form->handleRequest($request);
 
@@ -85,6 +78,17 @@ class PinsController extends AbstractController
             'pin'=> $pin
         ]);
 
+    }
+
+    /**
+     * @Route("/pins/{id<[0-9]+>}/delete", name="app_pins_delete")
+     */
+    public function delete(Pin $pin, EntityManagerInterface $em): Response
+    {
+        $em->remove($pin);
+        $em->flush();
+
+        return $this->redirectToRoute('app_home');
     }
 
 }
