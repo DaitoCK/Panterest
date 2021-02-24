@@ -9,11 +9,13 @@
     </article>
 
     <a href="{{ path('app_pins_edit', {id: pin.id}) }}">Modifier</a> |
-    <a href="#" onclick="event.preventDefault(); confirm('êtes vous sur de vouloir supprimer ?') && document.getElementById('js-pin-delete-form').submit();">Supprimer</a> |
-    <a href="{{ path('app_home') }}">Retour acceuil</a>
+    <a href="#"
+       onclick="event.preventDefault(); confirm('êtes vous sur de vouloir supprimer ?') &&
+       document.getElementById('js-pin-delete-form').submit();">Supprimer</a>
 
-    <form id="js-pin-delete-form" action="{{ path('app_pins_delete', {id: pin.id}) }}" method="post" style="display:none;">
-        <input type="hidden" name="csrf_token"value="{{ csrf_token('pin_deletion_' ~ pin.id) }}">
+    <form id="js-pin-delete-form" action="{{ path('app_pins_delete', {id: pin.id}) }}" method="post"
+          style="display:none;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token('pin_deletion_' ~ pin.id) }}">
         <input type="hidden" name="_method" value="DELETE">
     </form>
 

@@ -12,20 +12,26 @@
 
 {% block body %}
 
-    {% if route == 'app_pins_edit' %}
-        <h1>Modifier pin</h1>
-    {% else  %}
-        <h1> Créer Pin</h1>
-    {% endif %}
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            {% if route == 'app_pins_edit' %}
+                <h1>Modifier pin</h1>
+            {% else  %}
+                <h1> Créer Pin</h1>
+            {% endif %}
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
 
-    {% if  route == 'app_pins_edit' %}
-        <input type="submit" value="Modifier">
-    {% else %}
-        <input type="submit" value="Créer">
-    {% endif %}
-    {{ form_end(form) }}
+            {% if  route == 'app_pins_edit' %}
+                <input type="submit" class="btn btn-primary btn-block" value="Modifier">
+            {% else %}
+                <input type="submit" class="btn btn-primary btn-block" value="Créer">
+            {% endif %}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
 
 {% endblock %}

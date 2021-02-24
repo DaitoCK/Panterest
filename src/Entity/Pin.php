@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PinRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\Timestampable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PinRepository::class)
@@ -24,11 +25,15 @@ class Pin
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(min=10)
      */
     private $description;
 
@@ -36,7 +41,7 @@ class Pin
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -44,7 +49,7 @@ class Pin
     /**
      * @return mixed
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -53,7 +58,7 @@ class Pin
      * @param mixed $title
      * @return Pin
      */
-    public function setTitle($title)
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
         return $this;
@@ -62,7 +67,7 @@ class Pin
     /**
      * @return mixed
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -71,7 +76,7 @@ class Pin
      * @param mixed $description
      * @return Pin
      */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
         return $this;
