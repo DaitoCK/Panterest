@@ -19,9 +19,8 @@
             {% else  %}
                 <h1> Créer Pin</h1>
             {% endif %}
-
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
 
             {% if  route == 'app_pins_edit' %}
                 <input type="submit" class="btn btn-primary btn-block" value="Modifier">
@@ -31,7 +30,5 @@
             {{ form_end(form) }}
         </div>
     </div>
-
-
 
 {% endblock %}

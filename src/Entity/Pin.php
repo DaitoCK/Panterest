@@ -29,21 +29,22 @@ class Pin
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
      * @Assert\Length(min=3)
+     * @Assert\NotNull(message="Veuillez choisir un titre")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank
+     * @Assert\NotNull(message="Veuillez choisir une description")
      * @Assert\Length(min=10)
      */
     private $description;
 
     /**
      * @Vich\UploadableField(mapping="pin_image", fileNameProperty="imageName")
-     * @Assert\Image(maxSize="8M", mimeTypes = {"image/jpeg", "image/png"})
+     * @Assert\Image(maxSize="8M", mimeTypes = {"image/jpeg", "image/png", "image/svg"})
+     * @Assert\NotNull(message="Veuillez choisir une image")
      * @var File|null
      */
     private $imageFile;
