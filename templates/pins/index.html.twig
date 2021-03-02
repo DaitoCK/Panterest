@@ -4,27 +4,30 @@
 
 {% block body %}
     {% if pins|length > 0 %}
-        <h1 class="text-center text-muted mb-4">{{ pluralize(pins|length, 'Pin')}} </h1>
+        <h1 class="text-center text-muted mb-4">{{ pluralize(pins|length, 'Pin') }} </h1>
 
         {% for row in pins|batch(3) %}
-                <div class="row mb-5">
+            <div class="row mb-5">
                 {% for pin in row %}
                     <div class="col-md-4">
                         <article class="pin bg-white rounded shadow">
-                            <div class="mw-100 overflow-hidden">
+                            <div class="mw-100 overflow-hidden rounded-top">
                                 <a href="{{ path('app_pins_show', {id: pin.id}) }}">
                                     <img src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('build/images/default.png')) |
-                                    imagine_filter('squared_thumbnail_medium') }}" alt="{{ pin.title }}" class="w-100 rounded-top"/>
+                                    imagine_filter('squared_thumbnail_medium') }}" alt="{{ pin.title }}" class="w-100"/>
                                 </a>
                             </div>
-                            <h2 class="h5 pt-2 text-center "><a class="text-secondary text-muted text-decoration-none" href="{{ path('app_pins_show', {id: pin.id}) }}">{{ pin.title }}</a></h2>
+                            <h2 class="h5 pt-2 text-center "><a class="text-secondary text-muted text-decoration-none"
+                                                                href="{{ path('app_pins_show', {id: pin.id}) }}">{{ pin.title }}</a>
+                            </h2>
                             <p class="text-center pb-3 text-muted "><small>Mis en ligne [Full NAME]</small></p>
                         </article>
                     </div>
-                    {% endfor %}
-                </div>
+                {% endfor %}
+            </div>
         {% endfor %}
     {% else %}
-        <p class="h1 mt-5 text-center">Pas encore d'épingle.  <a href="{{ path('app_pins_create') }}">Soyez le premier!</a></p>
+        <p class="h1 mt-5 text-center">Pas encore d'épingle. <a href="{{ path('app_pins_create') }}">Soyez le
+                premier!</a></p>
     {% endif %}
 {% endblock %}
