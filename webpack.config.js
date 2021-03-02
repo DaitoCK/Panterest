@@ -64,6 +64,12 @@ Encore
     // uncomment if you use React
     //.enableReactPreset()
 
+    .copyFiles({
+        from: './assets/images',
+        to: '[path][name].[hash:8].[ext]',
+        context: './assets'
+    })
+
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher
     //.enableIntegrityHashes(Encore.isProduction())

@@ -44,7 +44,6 @@ class Pin
     /**
      * @Vich\UploadableField(mapping="pin_image", fileNameProperty="imageName")
      * @Assert\Image(maxSize="8M", mimeTypes = {"image/jpeg", "image/png", "image/svg"})
-     * @Assert\NotNull(message="Veuillez choisir une image")
      * @var File|null
      */
     private $imageFile;
