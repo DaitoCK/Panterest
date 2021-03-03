@@ -19,7 +19,7 @@
                     <small>
                         Mis en ligne
                         <time datetime="{{ pin.createdAt|date('D-m-y H:i:s') }}">{{ pin.createdAt|ago }}</time>
-                        By [Full NAME]
+                        By {{ pin.user.fullName }}
                     </small>
                 </p>
                 <p class="px-3 pb-3"> {{ pin.description }} </p>
