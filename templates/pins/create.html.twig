@@ -21,12 +21,13 @@
             {% endif %}
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
-
-            {% if  route == 'app_pins_edit' %}
-                <input type="submit" class="btn btn-primary btn-block mt-3" value="Modifier">
-            {% else %}
-                <input type="submit" class="btn btn-primary btn-block mt-3" value="Créer">
-            {% endif %}
+            <div class="d-grid gap-2">
+                {% if  route == 'app_pins_edit' %}
+                    <input type="submit" class="btn btn-primary btn-block d-grid gap-2 mt-3" value="Modifier">
+                {% else %}
+                    <input type="submit" class="btn btn-primary btn-block d-grid gap-2 mt-3" value="Créer">
+                {% endif %}
+            </div>
             {{ form_end(form) }}
         </div>
     </div>

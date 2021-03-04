@@ -37,6 +37,7 @@ class PinsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $pin->setCreatedAt(new \DateTime);
             $pin->setUpdatedAt(new \DateTime);
+            $pin->setUser($this->getUser());
             $em->persist($pin);
             $em->flush();
 
