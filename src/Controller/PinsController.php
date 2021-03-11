@@ -28,15 +28,15 @@ class PinsController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $em): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
+
         $pin = new Pin;
-
         $form = $this->createForm(PinType::class, $pin);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $pin->setCreatedAt(new \DateTime);
-            $pin->setUpdatedAt(new \DateTime);
             $pin->setUser($this->getUser());
             $em->persist($pin);
             $em->flush();
