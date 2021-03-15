@@ -212,7 +212,7 @@ class User implements UserInterface
         return $this->getFirstName() .' '. $this->getLastName();
     }
 
-    public function gravatar(?int $size = 200)
+    public function getGravatarUrl(?int $size = 200)
     {
         return sprintf('https://www.gravatar.com/avatar/%s/?s=%d', md5(strtolower(trim($this->getEmail()))), $size) ;
     }
