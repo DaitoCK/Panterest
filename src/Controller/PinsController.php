@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Pin;
 use App\Form\PinType;
 use App\Repository\PinRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -25,12 +27,10 @@ class PinsController extends AbstractController
     }
     /**
      * @Route("/pins/create", name="app_pins_create", methods="GET|POST")
+     * @Security("is_granted('ROLE_USER') && user.isVerified()")
      */
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepo): Response
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
 
         $pin = new Pin;
         $form = $this->createForm(PinType::class, $pin);
@@ -61,12 +61,10 @@ class PinsController extends AbstractController
 
     /**
      * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins_edit")
+     * @Security("is_granted('ROLE_USER') && user.isVerified() && pin.getUser() == user")
      */
     public function edit(Request $request, Pin $pin, EntityManagerInterface $em):Response
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
 
         $form = $this->createForm(PinType::class,$pin, [
             'method' => 'PUT'
@@ -91,13 +89,10 @@ class PinsController extends AbstractController
 
     /**
      * @Route("/pins/{id<[0-9]+>}/delete", name="app_pins_delete")
+     * @Security("is_granted('ROLE_USER') && user.isVerified() && pin.getUser() == user")
      */
     public function delete(Request $request, Pin $pin, EntityManagerInterface $em): Response
     {
-
-        if (! $this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
 
         if ($this->isCsrfTokenValid('pin_deletion_' .$pin->getId(), $request->request->get('csrf_token'))) {
             $em->remove($pin);
