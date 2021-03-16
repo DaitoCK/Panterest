@@ -29,7 +29,7 @@ class PinsController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         if (!$this->getUser()) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         $pin = new Pin;
@@ -62,10 +62,15 @@ class PinsController extends AbstractController
     /**
      * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins_edit")
      */
-    public function edit(Pin $pin, Request $request, EntityManagerInterface $em):Response
+    public function edit(Request $request, Pin $pin, EntityManagerInterface $em):Response
     {
-        $form = $this->createForm(PinType::class,$pin,);
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
+        $form = $this->createForm(PinType::class,$pin, [
+            'method' => 'PUT'
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -73,7 +78,6 @@ class PinsController extends AbstractController
             $em->flush();
 
             $this->addFlash('success','Le Pin a été modifer avec succès ');
-
 
             return $this->redirectToRoute('app_home');
         }
@@ -90,37 +94,23 @@ class PinsController extends AbstractController
      */
     public function delete(Request $request, Pin $pin, EntityManagerInterface $em): Response
     {
+
+        if (! $this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         if ($this->isCsrfTokenValid('pin_deletion_' .$pin->getId(), $request->request->get('csrf_token'))) {
             $em->remove($pin);
             $em->flush();
+
+            $this->addFlash('info','Le Pin a été supprimé avec succès ');
+
         }
-
-        $this->addFlash('info','Le Pin a été supprimé avec succès ');
-
 
         return $this->redirectToRoute('app_home');
     }
 
 }
-
-/*
-     * @Route("/add", name="app_add")
-     *
-
-
-    public function add(EntityManagerInterface $em): Response
-    {
-        $pin = new Pin;
-        $pin->setTitle('title4');
-        $pin->setDescription('DEsc4');
-        $pin->setCreatedAt(new \DateTime);
-        $pin->setUpdatedAt(new \DateTime);
-        $em->persist($pin);
-        $em->flush();
-        dd($pin);
-        return $this->render('pins/add.html.twig', compact('pin'));
-    }
-     */
 
 
 

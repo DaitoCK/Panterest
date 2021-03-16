@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\UserFormType;
 use App\Form\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/account")
+ * @IsGranted("Role_USER")
  */
 
 class AccountController extends AbstractController
@@ -30,9 +32,13 @@ class AccountController extends AbstractController
      */
     public function edit(Request $request, EntityManagerInterface $em): Response
     {
+
         $user = $this->getUser();
 
-        $form = $this->createForm(UserFormType::class, $user);
+        $form = $this->createForm(UserFormType::class, $user, [
+            'method' => 'PATCH'
+
+        ]);
 
         $form->handleRequest($request);
 
@@ -55,6 +61,7 @@ class AccountController extends AbstractController
     public function changePassword(Request $request, EntityManagerInterface $em,
                                    UserPasswordEncoderInterface $passwordEncoder): Response
     {
+
         $user = $this->getUser();
 
         $form = $this->createForm(ChangePasswordFormType::class, null, [
